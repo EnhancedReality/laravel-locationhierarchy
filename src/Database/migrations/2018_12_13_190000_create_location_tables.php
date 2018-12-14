@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+use EnhancedReality\LocationHierarchy\Helpers\HierarchicalTableHelper;
+
 class CreateLocationTables extends Migration
 {
     /**
@@ -13,11 +15,9 @@ class CreateLocationTables extends Migration
      */
     public function up()
     {
-        Schema::create('regions', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name',100);
-            $table->timestamps();
-        });
+        HierarchicalTableHelper::buildTable('regions');
+        HierarchicalTableHelper::buildTable('municipalities','regions');
+        HierarchicalTableHelper::buildTable('communities','municipalities');
     }
 
     /**
@@ -29,4 +29,5 @@ class CreateLocationTables extends Migration
     {
         Schema::dropIfExists('regions');
     }
+
 }

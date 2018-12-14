@@ -12,8 +12,16 @@ class LocationTest extends TestCase
 {
     public function test_it_can_create_locations()
     {
-        $this->assertCount(0,Region::all());
-        // $this->assertCount(0,Municipality::all());
-        // $this->assertCount(0,Community::all());
+        $shire = Region::create(['name'=>'The Shire']);
+        $this->assertCount(1,Region::all());
+
+        $hobbitton = Municipality::createIn($shire,'Hobbitton');
+        $this->assertCount(1,Municipality::all());
+
+        $underhill = Community::createIn($hobbitton,'Underhill');
+        $this->assertCount(1,Community::all());
+        
+        $this->assertEquals($hobbitton->id,$shire->children()->first()->id);
+        $this->assertEquals($hobbitton->id,$underhill->parent()->id);
     }
 }
