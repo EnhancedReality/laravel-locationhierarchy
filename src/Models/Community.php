@@ -6,5 +6,5 @@ use EnhancedReality\LocationHierarchy\Location;
 
 class Community extends Location
 {
-    protected static $parentClass = Municipality::class;
+    protected static $parentClass = MunicipalityDistrict::class;
 }
