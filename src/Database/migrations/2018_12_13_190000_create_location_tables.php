@@ -17,7 +17,8 @@ class CreateLocationTables extends Migration
     {
         HierarchicalTableHelper::buildTable('regions');
         HierarchicalTableHelper::buildTable('municipalities','regions');
-        HierarchicalTableHelper::buildTable('communities','municipalities');
+        HierarchicalTableHelper::buildTable('municipality_districts','municipalities');
+        HierarchicalTableHelper::buildTable('communities','municipality_districts');
     }
 
     /**
