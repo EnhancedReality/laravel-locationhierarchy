@@ -1,7 +1,7 @@
 {
     "name": "enhancedreality/laravel-locationhierarchy",
     "description": "Hierarchical locations for geo data storage",
-    "type": "laravel-module",
+    "type": "library",
     "require": {
         "php": ">=7.0",
         "illuminate/database": "~5.4.0|~5.5.0|~5.6.0|~5.7.0"
