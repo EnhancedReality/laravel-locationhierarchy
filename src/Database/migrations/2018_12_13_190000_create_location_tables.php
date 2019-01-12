@@ -28,7 +28,10 @@ class CreateLocationTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('regions');
+        Schema::dropIfExists('communities');
+        Schema::dropIfExists('municipality_districts');
+        Schema::dropIfExists('municipalities');       
+        Schema::dropIfExists('regions'); 
     }
 
 }
