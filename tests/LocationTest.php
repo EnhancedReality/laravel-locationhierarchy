@@ -7,6 +7,7 @@ use EnhancedReality\LocationHierarchy\Test\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use EnhancedReality\LocationHierarchy\{Community,Municipality,MunicipalityDistrict,Region,LocationServiceProvider};
+use EnhancedReality\LocationHierarchy\Helpers\LocationTree;
 
 class LocationTest extends TestCase
 {
@@ -22,7 +23,7 @@ class LocationTest extends TestCase
         $underhill = MunicipalityDistrict::createIn($hobbitton,'Underhill');
         $this->assertCount(1,MunicipalityDistrict::all());
 
-        $bagshotrow = Community::createIn($underhill,'Bagshot row');
+        $bagshotrow = Community::createIn($underhill,'Bagshot Row');
 
         $this->assertCount(1,Community::all());
         
@@ -39,5 +40,29 @@ class LocationTest extends TestCase
         // Communities must be created in Municipality Districts.
         $this->expectException(\InvalidArgumentException::class);
         $community = Community::createIn($municipality,'Maggot\'s Farm');
+    }
+
+    public function test_it_can_make_location_tree()
+    {
+        $locationTree = LocationTree::make([
+            'region' => 'West Farthing',
+            'municipality' => 'Bywater',
+            'municipality_district' => 'Underhill',
+            'community' => 'Bagshot Row'
+        ]);
+
+        $this->assertTrue($locationTree->valid());
+
+        $this->assertEquals(MunicipalityDistrict::first()->name,$locationTree->municipalityDistrict->name);
+
+        // Missing info
+        $locationTree = LocationTree::make([
+            'region' => 'West Farthing',
+            'municipality' => '',
+            'municipality_district' => 'Underhill',
+            'community' => 'Bagshot Row'
+        ]);
+
+        $this->assertFalse($locationTree->valid());
     }
 }
