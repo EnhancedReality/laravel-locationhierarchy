@@ -20,7 +20,10 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->artisan('migrate');
+        // $this->artisan('migrate');
+        // dd(realpath(__DIR__.'/../src/database/migrations'));
+        $this->loadMigrationsFrom(realpath(__DIR__.'/database/migrations'));
+        $this->loadMigrationsFrom(realpath(__DIR__.'/../src/database/migrations'));
     }
 
     protected function getEnvironmentSetUp($app)
